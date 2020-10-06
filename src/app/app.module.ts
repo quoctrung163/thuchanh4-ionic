@@ -11,6 +11,12 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { IonicStorageModule } from '@ionic/storage';
 
+import { UserDataService } from './model/user-data.service';
+
+import { AccountService } from './model/account.service';
+
+import { UserService } from './controller/user.service';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -19,6 +25,9 @@ import { IonicStorageModule } from '@ionic/storage';
   providers: [
     StatusBar,
     SplashScreen,
+    UserDataService,
+    AccountService,
+    UserService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
