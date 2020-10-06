@@ -35,6 +35,9 @@ export class HomePage {
       passwordVaildation: new FormControl('', [Validators.required, Validators.minLength(4)])
     });
 
+    // this.userDataService.setValue('test', 'test');
+    console.log('log', this.userDataService.listAccount);
+
     this.userDataService.getValue('user');
     // console.log(this.dataProvider);
     // this.storage.get('user').then((val) => {
