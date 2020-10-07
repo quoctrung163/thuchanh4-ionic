@@ -6,10 +6,9 @@ import { UserDataService } from '../model/user-data.service';
 })
 
 export class UserService {
-  constructor() { }
-  static checkLogin(email: string, password: string): boolean {
-    // return UserDataService.setAccount().checkLogin(email, password);
-    // return UserDataService.setDetailAccount().checkLogin(email, password);
-    return UserDataService.checkLogin(email, password);
+  constructor(public userDataService: UserDataService) { }
+  checkLogin1(email: string, password: string): boolean {
+    console.log('dung or sau', this.userDataService.checkLogin1(email, password));
+    return this.userDataService.checkLogin1(email, password);
   }
 }

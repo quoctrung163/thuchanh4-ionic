@@ -19,28 +19,44 @@ export class UserDataService {
   constructor(private storage: Storage) {
     this.getOldValue();
   }
-  static acc: AccountService;
-  static accDetail: AccountService;
-
-  static listAccount: AccountService[] = [];
-  static storageStatic: Storage;
 
   acc1: AccountService;
-  accDetail: AccountService;
-  listAccount: AccountService[] = [];
+  accDetail1: AccountService;
+  listAccount1: AccountService[] = [];
   oldStorage: UserInterface[] = [];
 
+  setDetailAccount1(): AccountService {
+    const arr = [{
+      email: 'quoctrung123@gmail.com',
+      username: 'quoctrung163',
+      password: '1234',
+      amount: 1000
+    }, {
+      email: 'miyucoder@gmail.com',
+      username: 'miyucoder',
+      password: '1234',
+      amount: 100000
+    }, {
+      email: 'trungpq@gmail.com',
+      username: 'trungpq',
+      password: '1234',
+      amount: 154545
+    }];
 
+    arr.map(item => {
+      this.addAccount(new AccountService(item.email, item.username, item.password, item.amount));
+    });
 
-  static setAccount(email: string, username: string, password: string, amount: number): AccountService {
-    this.acc = new AccountService(email, username, password, amount);
-    return this.acc;
+    this.listAccount1.map(item => {
+      this.accDetail1 = this.setAccount(item.email, item.userName, item.password, item.amount);
+    });
+    return this.accDetail1;
   }
 
-  static checkLogin(email: string, password: string): boolean {
-    this.setDetailAccount();
+  checkLogin(email: string, password: string): boolean {
+    this.setDetailAccount1();
     let bool = false;
-    this.listAccount.map((item, index) => {
+    this.listAccount1.map((item, index) => {
       if (item.email === email && item.password === password) {
         bool = true;
       }
@@ -48,42 +64,17 @@ export class UserDataService {
     return bool;
   }
 
-  static addAccount(account: AccountService) {
-    this.listAccount.push(account);
+  setAccount(email: string, username: string, password: string, amount: number): AccountService {
+    this.acc1 = new AccountService(email, username, password, amount);
+    return this.acc1;
   }
 
-  static setDetailAccount(): AccountService {
-    // const arr = [{
-    //   email: 'quoctrung123@gmail.com',
-    //   username: 'quoctrung163',
-    //   password: '1234',
-    //   amount: 1000
-    // }, {
-    //   email: 'miyucoder@gmail.com',
-    //   username: 'miyucoder',
-    //   password: '1234',
-    //   amount: 100000
-    // }, {
-    //   email: 'trungpq@gmail.com',
-    //   username: 'trungpq',
-    //   password: '1234',
-    //   amount: 154545
-    //   }];
-    const arr = [];
-
-    ///
-    arr.map(item => {
-      UserDataService.addAccount(new AccountService(item.email, item.username, item.password, item.amount));
-    });
-
-    UserDataService.listAccount.map(item => {
-      this.accDetail = UserDataService.setAccount(item.email, item.userName, item.password, item.amount);
-    });
-    return this.accDetail;
+  addAccount(account: AccountService) {
+    this.listAccount1.push(account);
   }
 
   setValue(key: string, value: any) {
-    this.storage.set('email', UserDataService.listAccount);
+    this.storage.set('email', this.listAccount1);
   }
 
   getValue(key: string) {

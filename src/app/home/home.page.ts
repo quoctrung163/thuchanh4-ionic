@@ -23,7 +23,7 @@ export class HomePage {
   passInput: string;
 
   constructor(private storage: Storage, public userDataService: UserDataService, private router: Router,
-              public navCtrl: NavController, public toastController: ToastController) {
+              public navCtrl: NavController, public toastController: ToastController, public userService: UserService) {
     this.registrationForm = new FormGroup({
       emailValidation: new FormControl('', [Validators.required, Validators.email, Validators.minLength(4)]),
       passwordVaildation: new FormControl('', [Validators.required, Validators.minLength(4)])
@@ -31,7 +31,7 @@ export class HomePage {
   }
 
   logForm() {
-    if (UserService.checkLogin(this.emailInput, this.passInput)) {
+    if (this.userService.checkLogin1(this.emailInput, this.passInput)) {
       this.router.navigateByUrl('/dashboard');
       this.correctToast();
     } else {
