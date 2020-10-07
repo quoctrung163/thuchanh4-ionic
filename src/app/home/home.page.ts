@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 
 import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { NavController } from '@ionic/angular';
@@ -57,7 +57,12 @@ export class HomePage {
 
   logForm() {
     if (this.userService.checkLogin(this.emailInput, this.passInput)) {
-      this.router.navigateByUrl('/dashboard');
+      this.router.navigateByUrl('/dashboard', {
+        state: {
+          email: this.emailInput,
+          password: this.passInput
+        }
+      });
       this.correctToast();
       console.log(this.userDataService.newListAccount);
     } else {

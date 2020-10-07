@@ -1,11 +1,25 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>ATM APP</ion-title>
+    <ion-title>Hệ thống ATM</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-text>
-    <h2>Hello world~</h2>
-  </ion-text>
+  <div id="container">
+    <h3>Tài khoản</h3>
+    <!-- <h3 *ngFor="let item of userDataService.newListAccount">{{ item.email }}</h3> -->
+    <h3>{{ email }}</h3>
+    <ion-button routerDirection="forward" (click)="detail()" class="btn-login" type="submit" color="danger"
+      expand="block">Xem thông tin
+      tài khoản
+    </ion-button>
+    <ion-button routerDirection="forward" (click)="detailAll()" class="btn-login" type="submit" color="danger"
+      expand="block">
+      Xem tất cả tài khoản!
+    </ion-button>
+    <ion-button routerDirection="forward" (click)="logOut()" class="btn-login" type="submit" color="danger"
+      expand="block">
+      Đăng xuất!
+    </ion-button>
+  </div>
 </ion-content>
