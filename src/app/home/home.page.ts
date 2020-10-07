@@ -24,6 +24,18 @@ export class HomePage {
 
   constructor(public storage: Storage, public userDataService: UserDataService, private router: Router,
               public navCtrl: NavController, public toastController: ToastController, public userService: UserService) {
+
+    this.storage.get('data').then(value => {
+      if (value === null) {
+        this.storage.set('data', [{
+          email: 'quoctrung163@gmail.com',
+          userName: 'quoctrung163',
+          password: 'quoctrung',
+          amount: 4545
+        }]);
+      }
+    });
+
     this.registrationForm = new FormGroup({
       emailValidation: new FormControl('', [Validators.required, Validators.email, Validators.minLength(4)]),
       passwordVaildation: new FormControl('', [Validators.required, Validators.minLength(4)])
@@ -32,24 +44,9 @@ export class HomePage {
   }
 
   initialState() {
-    const arr = [{
-      email: 'quoctrung263@gmail.com',
-      userName: 'quoctrung163',
-      password: 'quoctrung',
-      amount: 4545
-    }, {
-      email: 'quoctrung273@gmail.com',
-      userName: 'quoctrunddg163',
-      password: 'quoctrung',
-      amount: 4545
-    }, {
-      email: 'miyucoder@gmail.com',
-      userName: 'quoctrungdd163',
-      password: 'quoctrungdd',
-      amount: 4545
-    }];
 
     this.userDataService.getLocalStorageSync('data', this.userDataService.newListAccount);
+    console.log(this.userDataService.newListAccount.length === 0);
 
     console.log(this.userDataService.oldListAccount);
     console.log(this.userDataService.newListAccount);

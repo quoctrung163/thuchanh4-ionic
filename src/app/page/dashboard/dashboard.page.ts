@@ -44,15 +44,23 @@ export class DashboardPage implements OnInit {
   }
 
   detail() {
-
+    this.router.navigateByUrl('/detailuser', {
+      state: {
+        email: this.email
+      }
+    });
   }
 
   detailAll() {
-    this.router.navigateByUrl('/detailuser');
+    this.router.navigateByUrl('/show-all-user');
   }
 
   logOut() {
     this.router.navigateByUrl('/');
+  }
+
+  toTakeImage() {
+    this.router.navigateByUrl('/camera-user');
   }
 
 }

@@ -19,6 +19,9 @@ import { UserService } from './controller/user.service';
 
 import { File } from '@ionic-native/file/ngx';
 
+import { Camera } from '@ionic-native/camera/ngx';
+
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -30,6 +33,7 @@ import { File } from '@ionic-native/file/ngx';
     UserDataService,
     AccountService,
     UserService,
+    Camera,
     File,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

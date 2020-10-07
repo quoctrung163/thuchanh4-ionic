@@ -70,13 +70,25 @@ export class UserDataService {
 
   async setNewArray(email?: string, userName?: string, password?: string) {
     await this.oldListAccount.map(item => {
-      if (email === undefined || userName === undefined || password === undefined) {
-        this.newListAccount.push(new AccountService(item.email, item.userName, item.password, item.amount));
-      } else {
+      if (email !== undefined && userName !== undefined && password !== undefined) {
         this.newListAccount.push(new AccountService(item.email, item.userName, item.password, item.amount),
           new AccountService(email, userName, password, 44444));
+      } else {
+        this.newListAccount.push(new AccountService(item.email, item.userName, item.password, item.amount));
       }
+      // if (email === undefined || userName === undefined || password === undefined) {
+      // } else {
+      //   this.newListAccount.push(new AccountService(item.email, item.userName, item.password, item.amount),
+      //     new AccountService(email, userName, password, 44444));
+      // }
     });
+
+    // const uniqueArray = findEmail.filter((thing, index) => {
+    //   const emailStringify = JSON.stringify(thing);
+    //   return index === findEmail.findIndex(obj => {
+    //     return JSON.stringify(obj) === emailStringify;
+    //   });
+    // });
   }
 
   async getLocalStorageSync(key: string, value: any, email?: string, userName?: string, password?: string) {

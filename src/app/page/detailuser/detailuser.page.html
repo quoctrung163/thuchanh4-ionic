@@ -8,9 +8,11 @@
 </ion-header>
 
 <ion-content>
-  <div id="container" class="mt-10">
-    <h3>Danh sách các tài khoản</h3>
-    <h3 *ngFor="let item of userDataService.newListAccount">{{ item.email }}</h3>
+  <div id="container">
+    <h3>Thông tin tài khoản</h3>
+    <h3>username: {{name}}</h3>
+    <h3>email: {{email}}</h3>
+    <h3>số tiền: {{amount}}</h3>
     <!-- <h3>{{ email }}</h3> -->
   </div>
 </ion-content>

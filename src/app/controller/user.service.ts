@@ -8,7 +8,7 @@ import { UserDataService } from '../model/user-data.service';
 export class UserService {
   constructor(public userDataService: UserDataService) { }
   checkLogin(email: string, password: string): boolean {
-    console.log('dung or sau', this.userDataService.checkLogin(email, password));
+    console.log('correct or wrong', this.userDataService.checkLogin(email, password));
     return this.userDataService.checkLogin(email, password);
   }
 }
