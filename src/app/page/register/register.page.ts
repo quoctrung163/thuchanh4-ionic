@@ -13,7 +13,12 @@ import { UserService } from '../../controller/user.service';
   styleUrls: ['./register.page.scss'],
 })
 export class RegisterPage implements OnInit {
+
   registrationForm: FormGroup;
+  emailInput: string;
+  passInput: string;
+  userInput: string;
+
   constructor(public toastController: ToastController) {
     this.registrationForm = new FormGroup({
       emailValidation: new FormControl('', [Validators.required, Validators.email, Validators.minLength(4)]),
@@ -26,12 +31,15 @@ export class RegisterPage implements OnInit {
   }
 
   regForm() {
-
+    this.correctToast();
+    console.log('userInput: ', this.userInput);
+    console.log('passInput: ', this.passInput);
+    console.log('emailInput: ', this.emailInput);
   }
 
   async errorToast() {
     const toast = await this.toastController.create({
-      message: 'Wrong password or email!',
+      message: 'Register error, try again!',
       duration: 2000
     });
     toast.present();
@@ -39,7 +47,7 @@ export class RegisterPage implements OnInit {
 
   async correctToast() {
     const toast = await this.toastController.create({
-      message: 'Login successfully! ^^',
+      message: 'Create new account successfully!',
       duration: 2000
     });
     toast.present();

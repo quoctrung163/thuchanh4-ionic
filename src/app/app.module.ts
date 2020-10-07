@@ -17,6 +17,8 @@ import { AccountService } from './model/account.service';
 
 import { UserService } from './controller/user.service';
 
+import { File } from '@ionic-native/file/ngx';
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -28,6 +30,7 @@ import { UserService } from './controller/user.service';
     UserDataService,
     AccountService,
     UserService,
+    File,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

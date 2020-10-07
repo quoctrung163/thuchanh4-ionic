@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { NavController } from '@ionic/angular';
@@ -19,14 +19,8 @@ import { UserService } from '../controller/user.service';
 export class HomePage {
 
   registrationForm: FormGroup;
-
   emailInput: string;
   passInput: string;
-
-  user: {
-    email: string,
-    pass: string
-  };
 
   constructor(private storage: Storage, public userDataService: UserDataService, private router: Router,
               public navCtrl: NavController, public toastController: ToastController) {
@@ -34,42 +28,15 @@ export class HomePage {
       emailValidation: new FormControl('', [Validators.required, Validators.email, Validators.minLength(4)]),
       passwordVaildation: new FormControl('', [Validators.required, Validators.minLength(4)])
     });
-
-    // this.userDataService.setValue('test', 'test');
-    console.log('log', this.userDataService.listAccount);
-
-    this.userDataService.getValue('user');
-    // console.log(this.dataProvider);
-    // this.storage.get('user').then((val) => {
-    //   console.log(val);
-    // });
-
-    // this.storage.set('user', { email: 'quoctrung266@gmail.com', pass: 'gajkgaj' });
-  }
-
-  setUserInput() {
-    this.user = {
-      email: this.emailInput,
-      pass: this.passInput
-    };
   }
 
   logForm() {
-    // const data = this.user;
-    // if (this.emailInput === this.user.email && this.passInput === this.user.password) {
-    //   this.router.navigateByUrl('/dashboard', { state: data });
-    //   this.correctToast();
-    // } else {
-    //   this.errorToast();
-    // }
-
     if (UserService.checkLogin(this.emailInput, this.passInput)) {
       this.router.navigateByUrl('/dashboard');
       this.correctToast();
     } else {
       this.errorToast();
     }
-
   }
 
   async errorToast() {
@@ -89,7 +56,6 @@ export class HomePage {
   }
 
   async openAll() {
-    await this.setUserInput();
     await this.logForm();
   }
 }

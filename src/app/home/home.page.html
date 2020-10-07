@@ -14,7 +14,7 @@
   </ion-header>
 
   <ion-text>
-    <h5 class="title-login">Đăng nhập!</h5>
+    <h5 class="title">Đăng nhập!</h5>
   </ion-text>
 
   <form [formGroup]="registrationForm">
@@ -34,8 +34,11 @@
           (click)="openAll()" [disabled]="!registrationForm.valid">
           Sign In
         </ion-button>
-        <ion-router-link href='/register'>test</ion-router-link>
       </ion-col>
     </ion-row>
   </form>
+  <ion-text>
+    <h6 class="title">Not account? Register <ion-router-link color='white' href='/register'>here</ion-router-link>
+      !^^</h6>
+  </ion-text>
 </ion-content>

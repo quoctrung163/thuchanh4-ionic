@@ -15,11 +15,15 @@
     <h5 class="title-login">Đăng ký!</h5>
   </ion-text>
 
-
-  <!-- <form [formGroup]="registrationForm">
+  <form [formGroup]="registrationForm">
     <ion-item lines="full">
       <ion-label position="floating">Email</ion-label>
       <ion-input type="text" formControlName="emailValidation" [(ngModel)]="emailInput" required></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating">Username</ion-label>
+      <ion-input formControlName="userNameValidation" [(ngModel)]="userInput" required></ion-input>
     </ion-item>
 
     <ion-item lines="full">
@@ -30,10 +34,10 @@
     <ion-row>
       <ion-col>
         <ion-button routerDirection="root" class="btn-login" type="submit" color="danger" expand="block"
-          (click)="openAll()" [disabled]="!registrationForm.valid">
-          Sign In
+          (click)="regForm()" [disabled]="!registrationForm.valid">
+          Sign up
         </ion-button>
       </ion-col>
     </ion-row>
-  </form> -->
+  </form>
 </ion-content>
