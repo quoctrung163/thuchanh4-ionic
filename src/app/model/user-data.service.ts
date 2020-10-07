@@ -1,62 +1,37 @@
 import { Injectable } from '@angular/core';
-import { NumericValueAccessor } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
 import { AccountService } from '../model/account.service';
-
-interface UserInterface {
-  email: string;
-  username: string;
-  password: string;
-  amount: number;
-}
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class UserDataService {
+  acc: AccountService;
+  accDetail: AccountService;
+  oldListAccount: AccountService[] = [];
+  newListAccount: AccountService[] = [];
 
-  constructor(private storage: Storage) {
-    this.getOldValue();
+  constructor(public storage: Storage) {
+
   }
 
-  acc1: AccountService;
-  accDetail1: AccountService;
-  listAccount1: AccountService[] = [];
-  oldStorage: UserInterface[] = [];
+  setDetailAccount(): AccountService {
 
-  setDetailAccount1(): AccountService {
-    const arr = [{
-      email: 'quoctrung123@gmail.com',
-      username: 'quoctrung163',
-      password: '1234',
-      amount: 1000
-    }, {
-      email: 'miyucoder@gmail.com',
-      username: 'miyucoder',
-      password: '1234',
-      amount: 100000
-    }, {
-      email: 'trungpq@gmail.com',
-      username: 'trungpq',
-      password: '1234',
-      amount: 154545
-    }];
-
-    arr.map(item => {
-      this.addAccount(new AccountService(item.email, item.username, item.password, item.amount));
+    this.oldListAccount.map(item => {
+      this.addAccount(new AccountService(item.email, item.userName, item.password, item.amount));
     });
 
-    this.listAccount1.map(item => {
-      this.accDetail1 = this.setAccount(item.email, item.userName, item.password, item.amount);
+    this.newListAccount.map(item => {
+      this.accDetail = this.setAccount(item.email, item.userName, item.password, item.amount);
     });
-    return this.accDetail1;
+    return this.accDetail;
   }
 
   checkLogin(email: string, password: string): boolean {
-    this.setDetailAccount1();
+    this.setDetailAccount();
     let bool = false;
-    this.listAccount1.map((item, index) => {
+    this.newListAccount.map((item, index) => {
       if (item.email === email && item.password === password) {
         bool = true;
       }
@@ -65,16 +40,12 @@ export class UserDataService {
   }
 
   setAccount(email: string, username: string, password: string, amount: number): AccountService {
-    this.acc1 = new AccountService(email, username, password, amount);
-    return this.acc1;
+    this.acc = new AccountService(email, username, password, amount);
+    return this.acc;
   }
 
   addAccount(account: AccountService) {
-    this.listAccount1.push(account);
-  }
-
-  setValue(key: string, value: any) {
-    this.storage.set('email', this.listAccount1);
+    this.newListAccount.push(account);
   }
 
   getValue(key: string) {
@@ -85,12 +56,37 @@ export class UserDataService {
     });
   }
 
-  getOldValue() {
-    this.storage.get('email').then((value) => {
+  async getOldValue(key: string) {
+    await this.storage.get(key).then((value) => {
       value.map(item => {
-        this.oldStorage.push(item);
+        this.oldListAccount.push(new AccountService(item.email, item.userName, item.password, item.amount));
       });
     });
-    console.log('oldstorage', this.oldStorage);
+  }
+
+  async setValue(key: string, value: any) {
+    await this.storage.set(key, value);
+  }
+
+  async setNewArray(email?: string, userName?: string, password?: string) {
+    await this.oldListAccount.map(item => {
+      if (email === undefined || userName === undefined || password === undefined) {
+        this.newListAccount.push(new AccountService(item.email, item.userName, item.password, item.amount));
+      } else {
+        this.newListAccount.push(new AccountService(item.email, item.userName, item.password, item.amount),
+          new AccountService(email, userName, password, 44444));
+      }
+    });
+  }
+
+  async getLocalStorageSync(key: string, value: any, email?: string, userName?: string, password?: string) {
+    await this.getOldValue(key);
+    await this.setNewArray(email, userName, password);
+    await this.setValue(key, value);
+  }
+
+  async initialState(key: string) {
+    await this.getOldValue(key);
+    await this.setNewArray();
   }
 }

@@ -22,18 +22,44 @@ export class HomePage {
   emailInput: string;
   passInput: string;
 
-  constructor(private storage: Storage, public userDataService: UserDataService, private router: Router,
+  constructor(public storage: Storage, public userDataService: UserDataService, private router: Router,
               public navCtrl: NavController, public toastController: ToastController, public userService: UserService) {
     this.registrationForm = new FormGroup({
       emailValidation: new FormControl('', [Validators.required, Validators.email, Validators.minLength(4)]),
       passwordVaildation: new FormControl('', [Validators.required, Validators.minLength(4)])
     });
+    this.initialState();
+  }
+
+  initialState() {
+    const arr = [{
+      email: 'quoctrung263@gmail.com',
+      userName: 'quoctrung163',
+      password: 'quoctrung',
+      amount: 4545
+    }, {
+      email: 'quoctrung273@gmail.com',
+      userName: 'quoctrunddg163',
+      password: 'quoctrung',
+      amount: 4545
+    }, {
+      email: 'miyucoder@gmail.com',
+      userName: 'quoctrungdd163',
+      password: 'quoctrungdd',
+      amount: 4545
+    }];
+
+    this.userDataService.getLocalStorageSync('data', this.userDataService.newListAccount);
+
+    console.log(this.userDataService.oldListAccount);
+    console.log(this.userDataService.newListAccount);
   }
 
   logForm() {
-    if (this.userService.checkLogin1(this.emailInput, this.passInput)) {
+    if (this.userService.checkLogin(this.emailInput, this.passInput)) {
       this.router.navigateByUrl('/dashboard');
       this.correctToast();
+      console.log(this.userDataService.newListAccount);
     } else {
       this.errorToast();
     }
