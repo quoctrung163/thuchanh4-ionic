@@ -12,24 +12,16 @@ export class UserDataService {
   oldListAccount: AccountService[] = [];
   newListAccount: AccountService[] = [];
 
+  email: string;
+  username: string;
+  password: string;
+  amount: number;
+
   constructor(public storage: Storage) {
 
   }
 
-  setDetailAccount(): AccountService {
-
-    this.oldListAccount.map(item => {
-      this.addAccount(new AccountService(item.email, item.userName, item.password, item.amount));
-    });
-
-    this.newListAccount.map(item => {
-      this.accDetail = this.setAccount(item.email, item.userName, item.password, item.amount);
-    });
-    return this.accDetail;
-  }
-
   checkLogin(email: string, password: string): boolean {
-    this.setDetailAccount();
     let bool = false;
     this.newListAccount.map((item, index) => {
       if (item.email === email && item.password === password) {
@@ -39,14 +31,9 @@ export class UserDataService {
     return bool;
   }
 
-  setAccount(email: string, username: string, password: string, amount: number): AccountService {
-    this.acc = new AccountService(email, username, password, amount);
-    return this.acc;
-  }
-
-  addAccount(account: AccountService) {
-    this.newListAccount.push(account);
-  }
+  // addAccount(account: AccountService) {
+  //   this.newListAccount.push(account);
+  // }
 
   getValue(key: string) {
     this.storage.get(key).then((val) => {
@@ -71,10 +58,26 @@ export class UserDataService {
   async setNewArray(email?: string, userName?: string, password?: string) {
     await this.oldListAccount.map(item => {
       if (email !== undefined && userName !== undefined && password !== undefined) {
+        this.email = item.email;
+        this.username = item.userName;
+        this.password = item.password;
+        this.amount = item.amount;
+        // this.newListAccount.push(new AccountService(item.email, item.userName, item.password, item.amount),
+        //   new AccountService(email, userName, password, 44444));
+      } else {
+        this.email = '';
+        this.username = '';
+        this.password = '';
+        this.amount = 0;
+        // this.newListAccount.push(new AccountService(item.email, item.userName, item.password, item.amount));
+        // this.newListAccount = this.oldListAccount;
+      }
+
+      if (this.email === '' || this.username === '' || this.password === '' || this.amount === 0) {
+        this.newListAccount.push(new AccountService(item.email, item.userName, item.password, item.amount));
+      } else {
         this.newListAccount.push(new AccountService(item.email, item.userName, item.password, item.amount),
           new AccountService(email, userName, password, 44444));
-      } else {
-        this.newListAccount.push(new AccountService(item.email, item.userName, item.password, item.amount));
       }
       // if (email === undefined || userName === undefined || password === undefined) {
       // } else {
